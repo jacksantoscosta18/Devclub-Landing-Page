@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./scripts.js" defer></script>
+    <title>DevClub — Da largada à vaga</title>
+</head>
+
+<body>
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="logo"> <span class="dot"></span> <span>Dev<em>Club</em></span> </div>
+            <nav class="links">
+                <a href="#quem-somos">Quem somos</a>
+                <a href="#formacoes">Formações</a>
+                <a href="#alunos">Alunos</a>
+                <a href="#empresas">Empresas</a>
+                <a href="#tutores">Tutores</a>
+            </nav>
+            <a href="#formacoes" class="nav-cta">Entrar no grid</a>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="wrap">
+            <div class="lights">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="eyebrow">DevClub . temporada 2026</div>
+            <h1>Da largada ao <br> <em>pódio</em> da programação</h1>
+            <p class="lead">Formação prática, comunidade e suporte todos os dias — a trilha que já levou milhares de
+                pessoas do zero até a primeira vaga como desenvolvedor.</p>
+            <div class="hero-actions">
+                <a href="#formacoes" class="btn-primary">Luzes apagadas, vai! →</a>
+                <span class="hero-meta">Próxima turma em <strong>02:14:07</strong></span>
+            </div>
+            <div class="hero-stats">
+                <div> <b>18.000+</b> <span>Alunos formados</span> </div>
+                <div> <b>4</b> <span>Formações completas</span> </div>
+                <div> <b>800+</b> <span>Vagas conquistadas</span> </div>
+                <div> <b>24/7</b> <span>Box de suporte</span> </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="checker"></div>
+
+    <section class="quem-somos section-pad" id="quem-somos">
+        <div class="wrap quem-somos-inner">
+            <div class="quem-somos-text">
+                <div class="eyebrow">Boxes da equipe</div>
+                <h2>Quem é o DevClub</h2>
+                <p class="lead-sm">Somos uma equipe de corrida com um único objetivo: colocar você na primeira volta
+                    da sua carreira em tecnologia. Desde 2019 construímos uma metodologia própria — nada de curso
+                    genérico, é trilha, prática e acompanhamento de verdade, do primeiro "Hello World" até a
+                    contratação.</p>
+                <p class="lead-sm">Hoje somos referência em formação de programadores full stack no Brasil, com uma
+                    comunidade ativa de milhares de pilotos (é assim que chamamos nossos alunos) espalhados pelo
+                    país inteiro.</p>
+                <div class="quem-stats">
+                    <div> <b>2019</b> <span>Ano de fundação</span> </div>
+                    <div> <b>+50</b> <span>Pessoas na equipe</span> </div>
+                    <div> <b>4.9</b> <span>Nota média dos alunos</span> </div>
+                </div>
+            </div>
+            <div class="quem-somos-visual">
+                <div class="visual-card">
+                    <div class="visual-flag">DEV<span>CLUB</span></div>
+                    <p>"A gente não forma só programador. A gente forma piloto pronto pra qualquer pista do mercado."
+                    </p>
+                    <span class="visual-sign">— Equipe DevClub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trilha section-pad" id="formacoes">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Fim de semana de corrida</div>
+                <h2>Nossas formações</h2>
+                <p>Cada formação é uma sessão do fim de semana. Você só chega na corrida depois de dominar os treinos
+                    — e só sobe ao pódio depois de cruzar a linha de chegada dos projetos reais.</p>
+            </div>
+
+            <div class="track-scene">
+                <svg class="track-svg" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="track-path" d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
+                    <path id="progressPath" class="track-path-fill"
+                        d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
+                    <path class="track-path-dash" d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
+                </svg>
+            </div>
+
+            <div class="stages" id="stages" data-stage="1">
+                <div class="stage done">
+                    <div class="stage-flag">
+                        <span class="lap-no">TL1</span>
+                        <span class="status-pill done">Concluído</span>
+                    </div>
+                    <div class="stage-body">
+                        <h3>Treino Livre 1 — Programação do zero</h3>
+                        <p>Lógica de programação, HTML e CSS do zero. O aquecimento de pneus antes de acelerar de
+                            verdade.</p>
+                        <div class="stage-tags"> <span>Lógica</span> <span>HTML</span> <span>CSS</span> <span>Git</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stage done" data-stage="2">
+                    <div class="stage-flag">
+                        <span class="lap-no">TL2</span>
+                        <span class="status-pill done">Concluído</span>
+                    </div>
+                    <div class="stage-body">
+                        <h3>Treino Livre 2 — JavaScript essencial</h3>
+                        <p>Ajustando a suspensão: lógica avançada, DOM e as primeiras interações reais no navegador.</p>
+                        <div class="stage-tags"> <span>JavaScript</span> <span>DOM</span> <span>APIs</span> </div>
+                    </div>
+                </div>
+
+                <div class="stage active" data-stage="3">
+                    <div class="stage-flag">
+                        <span class="lap-no">CLS</span>
+                        <span class="status-pill active">Em andamento</span>
+                    </div>
+                    <div class="stage-body">
+                        <h3>Classificação — Front-end avançado</h3>
+                        <p>Definindo sua posição no grid: React, componentização e projetos com interface de verdade.
+                        </p>
+                        <div class="stage-tags"> <span>React</span> <span>Componentes</span> <span>UI</span> </div>
+                    </div>
+                </div>
+
+                <div class="stage" data-stage="4">
+                    <div class="stage-flag">
+                        <span class="lap-no">RCE</span>
+                        <span class="status-pill locked">Bloqueado</span>
+                    </div>
+                    <div class="stage-body">
+                        <h3>Corrida — Back-end e projetos reais</h3>
+                        <p>Ritmo de corrida: APIs, banco de dados e a construção de um projeto completo, do grid à
+                            bandeira.</p>
+                        <div class="stage-tags"> <span>Node.js</span> <span>Banco de dados</span> <span>Deploy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage" data-stage="5">
+                    <div class="stage-flag">
+                        <span class="lap-no">PDM</span>
+                        <span class="status-pill locked">Bloqueado</span>
+                    </div>
+                    <div class="stage-body">
+                        <h3>Pódio — Portfólio e carreira</h3>
+                        <p>A volta da vitória: portfólio, entrevistas simuladas e preparação para sua primeira vaga
+                            como desenvolvedor.</p>
+                        <div class="stage-tags"> <span>Portfólio</span> <span>Entrevistas</span> <span>Carreira</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="radio section-pad" id="alunos">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Rádio da equipe</div>
+                <h2>Quem já cruzou a linha de chegada</h2>
+                <p>Mensagens de quem completou a trilha do DevClub e conquistou a primeira vaga como desenvolvedor.</p>
+            </div>
+            <div class="radio-grid">
+                <div class="radio-card">
+                    <div class="radio-wave">))) SINAL RECEBIDO</div>
+                    <p class="msg">"Entrei sem nunca ter escrito uma linha de código. Cinco meses depois, cruzei a
+                        linha de chegada com meu primeiro projeto no ar e a carteira assinada."</p>
+                    <div class="radio-driver">
+                        <div class="driver-badge">RM</div>
+                        <div> <b>Rafael M.</b> <span> Front-end Jr. · Turma 04</span> </div>
+                    </div>
+                </div>
+                <div class="radio-card">
+                    <div class="radio-wave">))) SINAL RECEBIDO</div>
+                    <p class="msg">"A trilha por etapas me deu ritmo. Eu sabia exatamente em que volta estava e o que
+                        faltava até o pódio — e o suporte acelerou muito minha volta."</p>
+                    <div class="radio-driver">
+                        <div class="driver-badge">CS</div>
+                        <div> <b>Camila S.</b> <span> Full-stack · Turma 02</span> </div>
+                    </div>
+                </div>
+                <div class="radio-card">
+                    <div class="radio-wave">))) SINAL RECEBIDO</div>
+                    <p class="msg">"O suporte respondeu em minutos até de madrugada. Parecia ter uma equipe de boxes
+                        cuidando de cada erro meu até eu conseguir a vaga."</p>
+                    <div class="radio-driver">
+                        <div class="driver-badge">JP</div>
+                        <div> <b>João P.</b> <span> Back-end Jr · Turma 05</span> </div>
+                    </div>
+                </div>
+            </div>
+            <p class="radio-note">— fim de transmissão —</p>
+        </div>
+    </section>
+
+    <div class="checker"></div>
+
+    <section class="empresas section-pad" id="empresas">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Patrocinadores da pista</div>
+                <h2>Empresas que já contrataram nossos pilotos</h2>
+                <p>Nossos alunos já cruzaram a linha de chegada rumo a essas equipes.</p>
+            </div>
+            <div class="sponsor-grid">
+                <div class="sponsor-card"><span>Nébula Tech</span></div>
+                <div class="sponsor-card"><span>Órbita Software</span></div>
+                <div class="sponsor-card"><span>Vetor Digital</span></div>
+                <div class="sponsor-card"><span>Cortex Labs</span></div>
+                <div class="sponsor-card"><span>Fluxo Sistemas</span></div>
+                <div class="sponsor-card"><span>Zênite Cloud</span></div>
+                <div class="sponsor-card"><span>Pórtico Bank</span></div>
+                <div class="sponsor-card"><span>Malha Commerce</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tutores section-pad" id="tutores">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Box de comando</div>
+                <h2>Quem te guia na pista</h2>
+                <p>A equipe técnica que desenha a trilha, revisa seu código e te acompanha até o pódio.</p>
+            </div>
+            <div class="tutor-grid">
+                <div class="tutor-card">
+                    <div class="tutor-photo">RM</div>
+                    <h3>Rodolfo Mori</h3>
+                    <span class="tutor-role">Fundador &amp; Head de Engenharia</span>
+                    <p>Lidera a equipe técnica e desenha a trilha de formação do zero à vaga.</p>
+                </div>
+                <div class="tutor-card">
+                    <div class="tutor-photo">GE</div>
+                    <h3>George</h3>
+                    <span class="tutor-role">Tutor Full Stack</span>
+                    <p>Referência em front-end avançado e experiências de interface de alta performance.</p>
+                </div>
+                <div class="tutor-card">
+                    <div class="tutor-photo">AN</div>
+                    <h3>Andrey</h3>
+                    <span class="tutor-role">Tutor Full Stack</span>
+                    <p>Cuida da parte de back-end e arquitetura dos projetos reais da trilha.</p>
+                </div>
+                <div class="tutor-card">
+                    <div class="tutor-photo">GA</div>
+                    <h3>Gabriel</h3>
+                    <span class="tutor-role">Tutor Full Stack</span>
+                    <p>Responsável pela revisão de código e pelo suporte técnico da comunidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="checker"></div>
+
+    <section class="paddock section-pad" id="comunidade">
+        <div class="wrap paddock-inner">
+            <div>
+                <div class="eyebrow">Paddock</div>
+                <h2 style="margin-top:14px; font-size:clamp(28px,4vw,42px);">Sua garagem de equipe</h2>
+                <p style="margin-top:16px; color:var(--silver); font-size:16.5px; max-width:480px;">Um espaço só para
+                    quem está na pista com você: tire dúvidas, compartilhe sua volta mais rápida (aquele bug que você
+                    finalmente resolveu) e evolua em grupo.</p>
+                <div class="paddock-stats">
+                    <div> <b>18.000+</b> <span>Pilotos ativos</span> </div>
+                    <div> <b>40+</b> <span>Lives por temporada</span> </div>
+                    <div> <b>100%</b> <span>Gratuito para alunos</span> </div>
+                </div>
+                <div class="avatar-row">
+                    <div>RM</div>
+                    <div>CS</div>
+                    <div>JP</div>
+                    <div>AL</div>
+                    <div>+1k</div>
+                </div>
+            </div>
+
+            <div class="paddock-card">
+                <div class="eyebrow" style="margin-bottom:16px;">No ar agora</div>
+                <h3 style="text-transform:none; font-size:19px; margin-bottom:10px;">Live: revisão de código na sexta
+                </h3>
+                <p style="color:var(--silver); font-size:14.5px; margin-bottom:22px;">Toda sexta às 19h, a equipe
+                    revisa projetos enviados pela comunidade ao vivo.</p>
+                <a href="#" class="btn-primary" style="font-size:13px; padding:14px 22px;">Entrar para comunidade →</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="checker"></div>
+
+    <section class="final-cta">
+        <div class="wrap">
+            <div class="eyebrow" style="justify-content:center;">Grid de largada</div>
+            <h2 style="margin-top:14px;">As luzes vão apagar. Você vai estar pronto?</h2>
+            <p>Comece pelo Treino Livre 1 hoje e siga a trilha do DevClub até o pódio, na sua própria velocidade.</p>
+            <a href="#formacoes" class="btn-primary">Começar minha trilha →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">
+            <div class="foot-inner">
+                <div class="logo"> <span>Dev</span><span>Club</span></div>
+                <div class="foot-links">
+                    <a href="#quem-somos">Quem somos</a>
+                    <a href="#formacoes">Formações</a>
+                    <a href="#alunos">Alunos</a>
+                    <a href="#empresas">Empresas</a>
+                    <a href="#tutores">Tutores</a>
+                </div>
+            </div>
+            <div class="foot-copy">© 2026 DevClub — Todos os direitos reservados.</div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
