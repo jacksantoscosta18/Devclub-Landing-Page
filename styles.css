@@ -969,6 +969,16 @@ footer {
         align-items: flex-start;
     }
 
+    .foot-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .foot-links a {
+        white-space: nowrap;
+    }
+
     .sponsor-grid {
         grid-template-columns: 1fr;
     }
