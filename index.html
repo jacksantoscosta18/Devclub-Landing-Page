@@ -1,333 +1,721 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
-    <script src="./scripts.js" defer></script>
-    <title>DevClub — Da largada à vaga</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
+    content="Do zero ao primeiro emprego como programador full stack. Formação DevClub Full Stack Pro: front-end, back-end, banco de dados, deploy e carreira.">
+  <meta name="theme-color" content="#05060E">
+  <meta property="og:title" content="DevClub — Formação Full Stack Pro">
+  <meta property="og:description" content="Do zero ao primeiro emprego como programador full stack.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%234D8DFF'/><path d='M12 9 7 16l5 7M20 9l5 7-5 7' fill='none' stroke='%2304060E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./scripts.js" defer></script>
+  <title>DevClub — Formação Full Stack Pro</title>
+
 </head>
 
 <body>
-    <header class="nav">
-        <div class="nav-inner">
-            <div class="logo"> <span class="dot"></span> <span>Dev<em>Club</em></span> </div>
-            <nav class="links">
-                <a href="#quem-somos">Quem somos</a>
-                <a href="#formacoes">Formações</a>
-                <a href="#alunos">Alunos</a>
-                <a href="#empresas">Empresas</a>
-                <a href="#tutores">Tutores</a>
-            </nav>
-            <a href="#formacoes" class="nav-cta">Entrar no grid</a>
-        </div>
-    </header>
 
-    <section class="hero" id="hero">
-        <div class="wrap">
-            <div class="lights">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="eyebrow">DevClub . temporada 2026</div>
-            <h1>Da largada ao <br> <em>pódio</em> da programação</h1>
-            <p class="lead">Formação prática, comunidade e suporte todos os dias — a trilha que já levou milhares de
-                pessoas do zero até a primeira vaga como desenvolvedor.</p>
+  <canvas id="netbg" aria-hidden="true"></canvas>
+
+  <!-- ══════════════ NAV ══════════════ -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="#hero" class="brand" aria-label="DevClub — início">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#04060f" stroke-width="2.6" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 7 4 12l5 5M15 7l5 5-5 5" />
+          </svg>
+        </span>
+        Dev<span>Club</span>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="#trilha">Trilha</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#mentores">Mentores</a>
+        <a href="#depoimentos">Alunos</a>
+        <a href="#faq">Dúvidas</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#modulos" class="btn btn-ghost">Ver conteúdo</a>
+        <a href="#matricula" class="btn btn-primary">Quero entrar</a>
+        <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+          <i></i><i></i><i></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#trilha">Trilha</a>
+    <a href="#modulos">Módulos</a>
+    <a href="#mentores">Mentores</a>
+    <a href="#depoimentos">Alunos</a>
+    <a href="#faq">Dúvidas</a>
+    <a href="#matricula" class="btn btn-primary">Quero entrar</a>
+  </div>
+
+  <main>
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section id="hero" aria-label="Formação Full Stack Pro do DevClub">
+      <div class="hero-sticky">
+        <canvas id="stars" aria-hidden="true"></canvas>
+        <div class="hero-boom" id="heroBoom" aria-hidden="true"></div>
+        <div class="hero-ring" id="heroRing1" aria-hidden="true"></div>
+        <div class="hero-ring hero-ring-2" id="heroRing2" aria-hidden="true"></div>
+        <div class="horizon" aria-hidden="true"></div>
+
+        <!-- O titulo real fica acessível a leitores de tela; visualmente
+         o nome é desenhado pelas estrelas no canvas. -->
+        <h1 class="sr-only">DevClub — Formação Full Stack Pro</h1>
+
+        <div class="hero-content">
+          <div class="hero-top" id="heroTop">
+            <span class="eyebrow">Formação Full Stack Pro</span>
+          </div>
+
+          <div class="hero-bottom" id="heroBottom">
+            <p>Do primeiro <code style="font-family:var(--mono);color:var(--accent-2)">console.log</code> ao primeiro
+              contrato assinado. Uma formação completa em front-end, back-end e carreira — construída para quem começa
+              do zero.</p>
             <div class="hero-actions">
-                <a href="#formacoes" class="btn-primary">Luzes apagadas, vai! →</a>
-                <span class="hero-meta">Próxima turma em <strong>02:14:07</strong></span>
-            </div>
-            <div class="hero-stats">
-                <div> <b>18.000+</b> <span>Alunos formados</span> </div>
-                <div> <b>4</b> <span>Formações completas</span> </div>
-                <div> <b>800+</b> <span>Vagas conquistadas</span> </div>
-                <div> <b>24/7</b> <span>Box de suporte</span> </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="checker"></div>
-
-    <section class="quem-somos section-pad" id="quem-somos">
-        <div class="wrap quem-somos-inner">
-            <div class="quem-somos-text">
-                <div class="eyebrow">Boxes da equipe</div>
-                <h2>Quem é o DevClub</h2>
-                <p class="lead-sm">Somos uma equipe de corrida com um único objetivo: colocar você na primeira volta
-                    da sua carreira em tecnologia. Desde 2019 construímos uma metodologia própria — nada de curso
-                    genérico, é trilha, prática e acompanhamento de verdade, do primeiro "Hello World" até a
-                    contratação.</p>
-                <p class="lead-sm">Hoje somos referência em formação de programadores full stack no Brasil, com uma
-                    comunidade ativa de milhares de pilotos (é assim que chamamos nossos alunos) espalhados pelo
-                    país inteiro.</p>
-                <div class="quem-stats">
-                    <div> <b>2019</b> <span>Ano de fundação</span> </div>
-                    <div> <b>+50</b> <span>Pessoas na equipe</span> </div>
-                    <div> <b>4.9</b> <span>Nota média dos alunos</span> </div>
-                </div>
-            </div>
-            <div class="quem-somos-visual">
-                <div class="visual-card">
-                    <div class="visual-flag">DEV<span>CLUB</span></div>
-                    <p>"A gente não forma só programador. A gente forma piloto pronto pra qualquer pista do mercado."
-                    </p>
-                    <span class="visual-sign">— Equipe DevClub</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="trilha section-pad" id="formacoes">
-        <div class="wrap">
-            <div class="section-head">
-                <div class="eyebrow">Fim de semana de corrida</div>
-                <h2>Nossas formações</h2>
-                <p>Cada formação é uma sessão do fim de semana. Você só chega na corrida depois de dominar os treinos
-                    — e só sobe ao pódio depois de cruzar a linha de chegada dos projetos reais.</p>
-            </div>
-
-            <div class="track-scene">
-                <svg class="track-svg" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true">
-                    <path class="track-path" d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
-                    <path id="progressPath" class="track-path-fill"
-                        d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
-                    <path class="track-path-dash" d="M20,80 C 220,10 280,150 500,80 C 720,10 780,150 980,80"></path>
+              <a href="#matricula" class="btn btn-primary">
+                Começar agora
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
+              </a>
+              <a href="#trilha" class="btn btn-ghost">Como funciona</a>
             </div>
-
-            <div class="stages" id="stages" data-stage="1">
-                <div class="stage done">
-                    <div class="stage-flag">
-                        <span class="lap-no">TL1</span>
-                        <span class="status-pill done">Concluído</span>
-                    </div>
-                    <div class="stage-body">
-                        <h3>Treino Livre 1 — Programação do zero</h3>
-                        <p>Lógica de programação, HTML e CSS do zero. O aquecimento de pneus antes de acelerar de
-                            verdade.</p>
-                        <div class="stage-tags"> <span>Lógica</span> <span>HTML</span> <span>CSS</span> <span>Git</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stage done" data-stage="2">
-                    <div class="stage-flag">
-                        <span class="lap-no">TL2</span>
-                        <span class="status-pill done">Concluído</span>
-                    </div>
-                    <div class="stage-body">
-                        <h3>Treino Livre 2 — JavaScript essencial</h3>
-                        <p>Ajustando a suspensão: lógica avançada, DOM e as primeiras interações reais no navegador.</p>
-                        <div class="stage-tags"> <span>JavaScript</span> <span>DOM</span> <span>APIs</span> </div>
-                    </div>
-                </div>
-
-                <div class="stage active" data-stage="3">
-                    <div class="stage-flag">
-                        <span class="lap-no">CLS</span>
-                        <span class="status-pill active">Em andamento</span>
-                    </div>
-                    <div class="stage-body">
-                        <h3>Classificação — Front-end avançado</h3>
-                        <p>Definindo sua posição no grid: React, componentização e projetos com interface de verdade.
-                        </p>
-                        <div class="stage-tags"> <span>React</span> <span>Componentes</span> <span>UI</span> </div>
-                    </div>
-                </div>
-
-                <div class="stage" data-stage="4">
-                    <div class="stage-flag">
-                        <span class="lap-no">RCE</span>
-                        <span class="status-pill locked">Bloqueado</span>
-                    </div>
-                    <div class="stage-body">
-                        <h3>Corrida — Back-end e projetos reais</h3>
-                        <p>Ritmo de corrida: APIs, banco de dados e a construção de um projeto completo, do grid à
-                            bandeira.</p>
-                        <div class="stage-tags"> <span>Node.js</span> <span>Banco de dados</span> <span>Deploy</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stage" data-stage="5">
-                    <div class="stage-flag">
-                        <span class="lap-no">PDM</span>
-                        <span class="status-pill locked">Bloqueado</span>
-                    </div>
-                    <div class="stage-body">
-                        <h3>Pódio — Portfólio e carreira</h3>
-                        <p>A volta da vitória: portfólio, entrevistas simuladas e preparação para sua primeira vaga
-                            como desenvolvedor.</p>
-                        <div class="stage-tags"> <span>Portfólio</span> <span>Entrevistas</span> <span>Carreira</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="hero-meta">
+              <span>Do zero ao júnior</span>
+              <span>Mentorias ao vivo</span>
+              <span>Projetos reais no portfólio</span>
             </div>
+          </div>
         </div>
+
+        <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+          <i></i>
+          Role para revelar
+        </div>
+      </div>
     </section>
 
-    <section class="radio section-pad" id="alunos">
-        <div class="wrap">
-            <div class="section-head">
-                <div class="eyebrow">Rádio da equipe</div>
-                <h2>Quem já cruzou a linha de chegada</h2>
-                <p>Mensagens de quem completou a trilha do DevClub e conquistou a primeira vaga como desenvolvedor.</p>
-            </div>
-            <div class="radio-grid">
-                <div class="radio-card">
-                    <div class="radio-wave">))) SINAL RECEBIDO</div>
-                    <p class="msg">"Entrei sem nunca ter escrito uma linha de código. Cinco meses depois, cruzei a
-                        linha de chegada com meu primeiro projeto no ar e a carteira assinada."</p>
-                    <div class="radio-driver">
-                        <div class="driver-badge">RM</div>
-                        <div> <b>Rafael M.</b> <span> Front-end Jr. · Turma 04</span> </div>
-                    </div>
-                </div>
-                <div class="radio-card">
-                    <div class="radio-wave">))) SINAL RECEBIDO</div>
-                    <p class="msg">"A trilha por etapas me deu ritmo. Eu sabia exatamente em que volta estava e o que
-                        faltava até o pódio — e o suporte acelerou muito minha volta."</p>
-                    <div class="radio-driver">
-                        <div class="driver-badge">CS</div>
-                        <div> <b>Camila S.</b> <span> Full-stack · Turma 02</span> </div>
-                    </div>
-                </div>
-                <div class="radio-card">
-                    <div class="radio-wave">))) SINAL RECEBIDO</div>
-                    <p class="msg">"O suporte respondeu em minutos até de madrugada. Parecia ter uma equipe de boxes
-                        cuidando de cada erro meu até eu conseguir a vaga."</p>
-                    <div class="radio-driver">
-                        <div class="driver-badge">JP</div>
-                        <div> <b>João P.</b> <span> Back-end Jr · Turma 05</span> </div>
-                    </div>
-                </div>
-            </div>
-            <p class="radio-note">— fim de transmissão —</p>
+    <!-- ══════════════ EMPRESAS (ref. 1) ══════════════ -->
+    <section class="section" id="empresas" aria-labelledby="empresas-t">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">O destino</span>
+          <h2 id="empresas-t">O mercado que <span class="grad">contrata</span> quem sai daqui.</h2>
+          <p class="lead">Bancos, fintechs, varejo, saúde, agências e software houses disputam devs full stack. A
+            formação é desenhada para o que essas equipes realmente pedem em entrevista.</p>
         </div>
+
+        <div class="logo-grid reveal" role="list" aria-label="Empresas que contratam desenvolvedores full stack"
+          id="logoGrid"></div>
+
+        <p class="logo-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 16v-5M12 8h.01" />
+          </svg>
+          Empresas citadas como referência do mercado brasileiro de tecnologia.
+        </p>
+      </div>
     </section>
 
-    <div class="checker"></div>
+    <!-- ══════════════ NÚMEROS + RADAR (ref. 5) ══════════════ -->
+    <section class="section" id="numeros" aria-labelledby="numeros-t">
+      <div class="wrap stats-layout">
+        <div class="reveal">
+          <div class="section-head" style="margin-bottom:0">
+            <span class="eyebrow">Resultado</span>
+            <h2 id="numeros-t">Saiba exatamente <span class="grad">onde você está.</span></h2>
+            <p class="lead">A cada módulo entregue, seu nível é medido nas cinco competências que aparecem em toda vaga
+              de desenvolvedor júnior — para você saber o que treinar antes da próxima entrevista.</p>
+          </div>
 
-    <section class="empresas section-pad" id="empresas">
-        <div class="wrap">
-            <div class="section-head">
-                <div class="eyebrow">Patrocinadores da pista</div>
-                <h2>Empresas que já contrataram nossos pilotos</h2>
-                <p>Nossos alunos já cruzaram a linha de chegada rumo a essas equipes.</p>
+          <div class="stat-list">
+            <div class="stat">
+              <div class="stat-num"><span class="count" data-to="12000">0</span><span class="suf">+</span></div>
+              <div class="stat-lbl">alunos formados desde o início da comunidade</div>
             </div>
-            <div class="sponsor-grid">
-                <div class="sponsor-card"><span>Nébula Tech</span></div>
-                <div class="sponsor-card"><span>Órbita Software</span></div>
-                <div class="sponsor-card"><span>Vetor Digital</span></div>
-                <div class="sponsor-card"><span>Cortex Labs</span></div>
-                <div class="sponsor-card"><span>Fluxo Sistemas</span></div>
-                <div class="sponsor-card"><span>Zênite Cloud</span></div>
-                <div class="sponsor-card"><span>Pórtico Bank</span></div>
-                <div class="sponsor-card"><span>Malha Commerce</span></div>
+            <div class="stat">
+              <div class="stat-num"><span class="count" data-to="3500">0</span><span class="suf">+</span></div>
+              <div class="stat-lbl">primeiros empregos como programador conquistados</div>
             </div>
+            <div class="stat">
+              <div class="stat-num"><span class="suf" style="font-size:.45em;align-self:center">R$</span><span
+                  class="count" data-to="6200" data-fmt="milhar">0</span></div>
+              <div class="stat-lbl">salário médio inicial relatado por quem foi contratado</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num"><span class="count" data-to="94">0</span><span class="suf">%</span></div>
+              <div class="stat-lbl">recomendam a formação para quem começa do zero</div>
+            </div>
+          </div>
         </div>
+
+        <!-- Celular -->
+        <div class="phone reveal" role="img"
+          aria-label="Aplicativo mostrando nível do aluno: Júnior Pronto, 78 de 100, com gráfico de competências">
+          <div class="phone-screen">
+            <div class="phone-glow" aria-hidden="true"></div>
+            <div class="ph-label">Seu nível</div>
+            <div class="ph-title">Júnior Pronto para o Mercado</div>
+            <div class="ph-score">78<small>de 100 pontos</small></div>
+
+            <div class="radar" id="radar" aria-hidden="true">
+              <svg viewBox="0 0 200 190">
+                <g id="radarGrid" stroke="rgba(255,255,255,.12)" fill="none" stroke-width="1"></g>
+                <g id="radarAxes" stroke="rgba(255,255,255,.09)" stroke-width="1"></g>
+                <polygon class="radar-poly" id="radarPoly" points=""></polygon>
+                <g id="radarDots"></g>
+                <g id="radarLabels"></g>
+              </svg>
+            </div>
+
+            <div class="ph-btn">Ver meu diagnóstico</div>
+            <div class="ph-home" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="tutores section-pad" id="tutores">
-        <div class="wrap">
-            <div class="section-head">
-                <div class="eyebrow">Box de comando</div>
-                <h2>Quem te guia na pista</h2>
-                <p>A equipe técnica que desenha a trilha, revisa seu código e te acompanha até o pódio.</p>
-            </div>
-            <div class="tutor-grid">
-                <div class="tutor-card">
-                    <div class="tutor-photo">RM</div>
-                    <h3>Rodolfo Mori</h3>
-                    <span class="tutor-role">Fundador &amp; Head de Engenharia</span>
-                    <p>Lidera a equipe técnica e desenha a trilha de formação do zero à vaga.</p>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-photo">GE</div>
-                    <h3>George</h3>
-                    <span class="tutor-role">Tutor Full Stack</span>
-                    <p>Referência em front-end avançado e experiências de interface de alta performance.</p>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-photo">AN</div>
-                    <h3>Andrey</h3>
-                    <span class="tutor-role">Tutor Full Stack</span>
-                    <p>Cuida da parte de back-end e arquitetura dos projetos reais da trilha.</p>
-                </div>
-                <div class="tutor-card">
-                    <div class="tutor-photo">GA</div>
-                    <h3>Gabriel</h3>
-                    <span class="tutor-role">Tutor Full Stack</span>
-                    <p>Responsável pela revisão de código e pelo suporte técnico da comunidade.</p>
-                </div>
-            </div>
+    <!-- ══════════════ TRILHA (ref. 2) ══════════════ -->
+    <section class="section" id="trilha" aria-labelledby="trilha-t">
+      <div class="wrap">
+        <div class="track-head reveal">
+          <div style="display:flex;flex-direction:column;gap:1.35rem">
+            <span class="eyebrow">Processo</span>
+            <h2 id="trilha-t">Do zero ao <span class="grad">contratado</span></h2>
+          </div>
+          <p class="lead">Quatro fases encadeadas. Cada uma entrega um resultado concreto — não uma sensação de
+            progresso.</p>
         </div>
+
+        <div class="track-rail" aria-hidden="true">
+          <div class="track-rail-fill" id="railFill"></div>
+          <div class="track-nodes">
+            <div class="track-node" data-node="0"></div>
+            <div class="track-node" data-node="1"></div>
+            <div class="track-node" data-node="2"></div>
+            <div class="track-node" data-node="3"></div>
+          </div>
+        </div>
+
+        <div class="track-cards" id="trackCards">
+          <article class="tcard" data-card="0">
+            <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
+              </svg></div>
+            <h3>Fundamentos</h3>
+            <p>Lógica, HTML, CSS e JavaScript sem atalhos. Você entende <em>por que</em> o código funciona antes de sair
+              copiando.</p>
+            <div class="tcard-idx">Fase 01 · semanas 1–6</div>
+          </article>
+
+          <article class="tcard" data-card="1">
+            <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg></div>
+            <h3>Front-end</h3>
+            <p>React, componentes, estado, consumo de API e interfaces responsivas que aguentam o teste de um
+              recrutador.</p>
+            <div class="tcard-idx">Fase 02 · semanas 7–14</div>
+          </article>
+
+          <article class="tcard" data-card="2">
+            <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5.5" rx="8" ry="3" />
+                <path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13" />
+                <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" />
+              </svg></div>
+            <h3>Back-end</h3>
+            <p>Node.js, APIs REST, autenticação, MongoDB e PostgreSQL. O lado que separa quem "faz site" de quem
+              constrói produto.</p>
+            <div class="tcard-idx">Fase 03 · semanas 15–24</div>
+          </article>
+
+          <article class="tcard" data-card="3">
+            <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 16.5 3 21l4.5-1.5" />
+                <path d="M14 4.5c3.5-2 6.5-1.5 6.5-1.5s.5 3-1.5 6.5c-1.6 2.8-5 6-8 8L7 14c2-3 4.2-6.4 7-9.5Z" />
+                <circle cx="15" cy="9" r="1.6" />
+              </svg></div>
+            <h3>Carreira</h3>
+            <p>Portfólio, GitHub, LinkedIn, currículo e simulação de entrevista técnica até a proposta chegar.</p>
+            <div class="tcard-idx">Fase 04 · contínuo</div>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <div class="checker"></div>
-
-    <section class="paddock section-pad" id="comunidade">
-        <div class="wrap paddock-inner">
-            <div>
-                <div class="eyebrow">Paddock</div>
-                <h2 style="margin-top:14px; font-size:clamp(28px,4vw,42px);">Sua garagem de equipe</h2>
-                <p style="margin-top:16px; color:var(--silver); font-size:16.5px; max-width:480px;">Um espaço só para
-                    quem está na pista com você: tire dúvidas, compartilhe sua volta mais rápida (aquele bug que você
-                    finalmente resolveu) e evolua em grupo.</p>
-                <div class="paddock-stats">
-                    <div> <b>18.000+</b> <span>Pilotos ativos</span> </div>
-                    <div> <b>40+</b> <span>Lives por temporada</span> </div>
-                    <div> <b>100%</b> <span>Gratuito para alunos</span> </div>
-                </div>
-                <div class="avatar-row">
-                    <div>RM</div>
-                    <div>CS</div>
-                    <div>JP</div>
-                    <div>AL</div>
-                    <div>+1k</div>
-                </div>
-            </div>
-
-            <div class="paddock-card">
-                <div class="eyebrow" style="margin-bottom:16px;">No ar agora</div>
-                <h3 style="text-transform:none; font-size:19px; margin-bottom:10px;">Live: revisão de código na sexta
-                </h3>
-                <p style="color:var(--silver); font-size:14.5px; margin-bottom:22px;">Toda sexta às 19h, a equipe
-                    revisa projetos enviados pela comunidade ao vivo.</p>
-                <a href="#" class="btn-primary" style="font-size:13px; padding:14px 22px;">Entrar para comunidade →</a>
-            </div>
+    <!-- ══════════════ MÓDULOS ══════════════ -->
+    <section class="section" id="modulos" aria-labelledby="modulos-t">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Conteúdo</span>
+          <h2 id="modulos-t">Uma grade que <span class="grad">termina em projeto</span>, não em certificado.</h2>
+          <p class="lead">Cada módulo entrega uma aplicação funcionando no seu portfólio. No fim, você tem o que mostrar
+            — não só o que contar.</p>
         </div>
+
+        <div class="tech-stage">
+          <div class="tech-glow" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+          <a href="#matricula" class="btn btn-primary tech-cta">
+            Ver a formação completa
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+
+          <div class="tech-cloud" role="list" aria-label="Módulos da formação">
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#243049,#0B0F1C 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#7A8CB8,#3F4C6B);box-shadow:0 12px 26px -8px rgba(122,140,184,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M8 4 3 12l5 8M16 4l5 8-5 8" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Lógica</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#5A2E1E,#160B08 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#FF8A5C,#C0431A);box-shadow:0 12px 26px -8px rgba(255,138,92,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M9 3 4 21h3l1.2-4h7.6L17 21h3L15 3" />
+                    <path d="M7.4 13h9.2" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>HTML &amp; CSS</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#5A4A0E,#171204 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#F5D949,#D6A517);box-shadow:0 12px 26px -8px rgba(245,217,73,.5);color:#1A1200">
+                  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><text x="12" y="16.5" font-size="11"
+                      font-weight="700" text-anchor="middle" font-family="Arial">JS</text></svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>JavaScript</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#0E3F49,#071A1F 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#7BE0F5,#2596B0);box-shadow:0 12px 26px -8px rgba(123,224,245,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.6" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>React</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#0E4A2C,#071C12 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#4ED690,#1F9C5F);box-shadow:0 12px 26px -8px rgba(78,214,144,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 2 3 7v10l9 5 9-5V7z" />
+                    <path d="M12 22V12M3 7l9 5 9-5" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Node.js</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#123055,#060E1E 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#6BA0FF,#3D6FE0);box-shadow:0 12px 26px -8px rgba(107,160,255,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <ellipse cx="12" cy="6" rx="8" ry="3" />
+                    <path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6" />
+                    <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Banco de Dados</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#173B5C,#071626 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#5CC7FF,#1F86C7);box-shadow:0 12px 26px -8px rgba(92,199,255,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="8" width="8" height="6" rx="1" />
+                    <rect x="12" y="8" width="8" height="6" rx="1" />
+                    <rect x="7.5" y="3" width="8" height="6" rx="1" />
+                    <path d="M3 18h18" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Deploy &amp; Docker</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#3A1F52,#130A1E 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#C79CFF,#8A56E0);box-shadow:0 12px 26px -8px rgba(199,156,255,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4.5 16.5 3 21l4.5-1.5" />
+                    <path d="M14 4.5c3.5-2 6.5-1.5 6.5-1.5s.5 3-1.5 6.5c-1.6 2.8-5 6-8 8L7 14c2-3 4.2-6.4 7-9.5Z" />
+                    <circle cx="15" cy="9" r="1.6" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Carreira</h3>
+            </div>
+
+            <div class="tech-item reveal" role="listitem">
+              <div class="tech-tile" style="background:linear-gradient(150deg,#4A1030,#160510 70%)">
+                <div class="tech-icon"
+                  style="background:linear-gradient(150deg,#FF7AC6,#D63C93);box-shadow:0 12px 26px -8px rgba(255,122,198,.55)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-4-1L3 20l1-4.5A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5Z" />
+                  </svg>
+                </div>
+                <span class="tech-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg></span>
+              </div>
+              <h3>Mentoria</h3>
+            </div>
+
+            <p class="tech-more">e muito mais…</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <div class="checker"></div>
-
-    <section class="final-cta">
-        <div class="wrap">
-            <div class="eyebrow" style="justify-content:center;">Grid de largada</div>
-            <h2 style="margin-top:14px;">As luzes vão apagar. Você vai estar pronto?</h2>
-            <p>Comece pelo Treino Livre 1 hoje e siga a trilha do DevClub até o pódio, na sua própria velocidade.</p>
-            <a href="#formacoes" class="btn-primary">Começar minha trilha →</a>
+    <!-- ══════════════ MENTORES (ref. 4) ══════════════ -->
+    <section id="mentores" aria-labelledby="mentores-t">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Quem ensina</span>
+          <h2 id="mentores-t">Gente que <span class="grad">vive de código</span> — e ensina o que usa.</h2>
+          <p class="lead">Sem professor teórico. Cada mentor entrega aula sobre o que resolve no dia a dia da própria
+            carreira.</p>
         </div>
+      </div>
+
+      <div class="mentor-scroll" id="mentorScroll">
+        <div class="mentor-sticky">
+          <div class="mentor-stage">
+
+            <div class="mentor-disc-wrap">
+              <div class="mentor-ring" aria-hidden="true"></div>
+              <div class="mentor-ring-2" aria-hidden="true"></div>
+              <div class="mentor-disc" id="mentorDisc">
+                <div class="mentor-face f1 on" data-face="0"><span class="initials">RM</span></div>
+                <div class="mentor-face f2" data-face="1"><span class="initials">CA</span></div>
+                <div class="mentor-face f3" data-face="2"><span class="initials">JP</span></div>
+                <div class="mentor-face f4" data-face="3"><span class="initials">LF</span></div>
+                <div class="mentor-face f5" data-face="4"><span class="initials">MS</span></div>
+              </div>
+            </div>
+
+            <div class="mentor-copy" id="mentorCopy">
+              <article class="mentor-item on" data-item="0">
+                <div class="mentor-role">Fundador · Head de Ensino</div>
+                <h3 class="mentor-name">Rodolfo Mori</h3>
+                <p class="mentor-bio">Criou o DevClub depois de trilhar o próprio caminho do zero até desenvolvedor
+                  sênior. Hoje conduz a formação e as mentorias que já colocaram milhares de alunos no primeiro emprego.
+                </p>
+                <div class="mentor-skills"><span class="tag">estratégia de carreira</span><span
+                    class="tag">JavaScript</span><span class="tag">mentoria</span></div>
+              </article>
+
+              <article class="mentor-item" data-item="1">
+                <div class="mentor-role">Mentora · Front-end</div>
+                <h3 class="mentor-name">Camila Alves</h3>
+                <p class="mentor-bio">Constrói interfaces em produção para produtos com milhões de acessos. Ensina React
+                  com foco em performance, acessibilidade e o que o time de UI realmente cobra em code review.</p>
+                <div class="mentor-skills"><span class="tag">React</span><span class="tag">design system</span><span
+                    class="tag">acessibilidade</span></div>
+              </article>
+
+              <article class="mentor-item" data-item="2">
+                <div class="mentor-role">Mentor · Back-end</div>
+                <h3 class="mentor-name">João Pedro</h3>
+                <p class="mentor-bio">Arquiteta APIs que aguentam pico de tráfego. Traz para a aula os erros caros que
+                  só aparecem quando o sistema está no ar — e como evitá-los desde o primeiro endpoint.</p>
+                <div class="mentor-skills"><span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span
+                    class="tag">segurança</span></div>
+              </article>
+
+              <article class="mentor-item" data-item="3">
+                <div class="mentor-role">Mentor · Infra &amp; DevOps</div>
+                <h3 class="mentor-name">Lucas Ferraz</h3>
+                <p class="mentor-bio">Cuida do caminho entre o seu commit e o usuário final. Docker, pipelines e deploy
+                  explicados de forma que dá para aplicar no projeto da mesma semana.</p>
+                <div class="mentor-skills"><span class="tag">Docker</span><span class="tag">CI/CD</span><span
+                    class="tag">cloud</span></div>
+              </article>
+
+              <article class="mentor-item" data-item="4">
+                <div class="mentor-role">Mentora · Carreira</div>
+                <h3 class="mentor-name">Mariana Souza</h3>
+                <p class="mentor-bio">Passou anos do outro lado da mesa, recrutando devs. Agora mostra como currículo,
+                  LinkedIn e entrevista técnica são lidos por quem decide a contratação.</p>
+                <div class="mentor-skills"><span class="tag">entrevistas</span><span class="tag">portfólio</span><span
+                    class="tag">negociação</span></div>
+              </article>
+
+              <div class="mentor-counter" id="mentorCounter" aria-hidden="true"><b>01</b> / 05</div>
+              <div class="mentor-progress" aria-hidden="true"><i id="mentorBar"></i></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </section>
 
-    <footer>
-        <div class="wrap">
-            <div class="foot-inner">
-                <div class="logo"> <span>Dev</span><span>Club</span></div>
-                <div class="foot-links">
-                    <a href="#quem-somos">Quem somos</a>
-                    <a href="#formacoes">Formações</a>
-                    <a href="#alunos">Alunos</a>
-                    <a href="#empresas">Empresas</a>
-                    <a href="#tutores">Tutores</a>
-                </div>
-            </div>
-            <div class="foot-copy">© 2026 DevClub — Todos os direitos reservados.</div>
+    <!-- ══════════════ DEPOIMENTOS (ref. 3) ══════════════ -->
+    <section class="section" id="depoimentos" aria-labelledby="dep-t">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Alunos</span>
+          <h2 id="dep-t">Depoimentos</h2>
+          <p class="lead">Histórias de quem começou sem saber o que era uma variável e hoje entrega código em produção.
+          </p>
         </div>
-    </footer>
+      </div>
+
+      <div class="marquee-row m-left" id="row1" aria-label="Depoimentos de alunos"></div>
+      <div class="marquee-row m-right" id="row2" aria-hidden="true"></div>
+    </section>
+
+    <!-- ══════════════ FAQ ══════════════ -->
+    <section class="section" id="faq" aria-labelledby="faq-t">
+      <div class="wrap faq-layout">
+        <div class="section-head reveal" style="margin-bottom:0">
+          <span class="eyebrow">Dúvidas</span>
+          <h2 id="faq-t">Antes de <span class="grad">decidir</span></h2>
+          <p class="lead">As perguntas que aparecem em toda conversa com quem está pensando em começar.</p>
+        </div>
+
+        <div class="faq-list" id="faqList">
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">01</span><span class="faq-text">Preciso
+                saber programar para entrar?</span><span class="faq-ico" aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>Não. A formação começa em lógica de programação, do absoluto zero. Quem já tem base pode pular direto
+                para os módulos de React e Node sem perder o fio.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">02</span><span class="faq-text">Quanto
+                tempo leva até eu estar pronto para vagas?</span><span class="faq-ico"
+                aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>Depende do ritmo. Estudando entre 1h e 2h por dia, a maior parte dos alunos chega ao nível júnior com
+                portfólio montado entre 6 e 12 meses.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">03</span><span class="faq-text">As aulas
+                são ao vivo ou gravadas?</span><span class="faq-ico" aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>O conteúdo é gravado, para você estudar no seu horário. Além disso há mentorias ao vivo toda semana
+                para tirar dúvidas, revisar código e destravar projeto.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">04</span><span class="faq-text">Consigo
+                conciliar com um trabalho em tempo integral?</span><span class="faq-ico"
+                aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>Sim — é o perfil mais comum na turma. A trilha é modular e o progresso fica salvo, então você avança
+                nos dias que der e retoma exatamente de onde parou.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">05</span><span class="faq-text">Vou sair
+                com projetos para mostrar?</span><span class="faq-ico" aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>Cada módulo termina em uma aplicação funcionando e publicada. No fim da trilha você tem um portfólio no
+                GitHub e um projeto full stack completo no ar.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-q" aria-expanded="false"><span class="faq-num">06</span><span class="faq-text">E se não
+                for para mim?</span><span class="faq-ico" aria-hidden="true"></span></button>
+            <div class="faq-a">
+              <p>Existe o prazo de garantia previsto na plataforma de pagamento. Dentro desse período, o reembolso é
+                integral e sem burocracia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CTA ══════════════ -->
+    <section class="section" id="matricula">
+      <div class="wrap">
+        <div class="cta reveal">
+          <span class="eyebrow">Próxima turma</span>
+          <h2>Seu primeiro <span class="grad">console.log</span> pode ser hoje.</h2>
+          <p class="lead">Entre para a formação, comece pelo módulo de lógica e publique seu primeiro projeto ainda esta
+            semana.</p>
+          <div class="hero-actions">
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20quero%20garantir%20minha%20vaga%20na%20Forma%C3%A7%C3%A3o%20Full%20Stack%20Pro%20da%20DevClub!"
+              target="_blank" rel="noopener" class="btn btn-primary">
+              Garantir minha vaga
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a href="#modulos" class="btn btn-ghost">Rever o conteúdo</a>
+          </div>
+          <div class="hero-meta" style="margin-top:.25rem">
+            <span>Acesso imediato</span>
+            <span>Garantia na plataforma</span>
+            <span>Suporte e comunidade</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════ RODAPÉ ══════════════ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="brand" aria-label="DevClub — início">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#04060f" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M9 7 4 12l5 5M15 7l5 5-5 5" />
+              </svg>
+            </span>
+            Dev<span>Club</span>
+          </a>
+          <p>Formação Full Stack Pro — do zero ao primeiro emprego como programador.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Rodapé">
+          <a href="#trilha">Trilha</a>
+          <a href="#modulos">Módulos</a>
+          <a href="#mentores">Mentores</a>
+          <a href="#faq">Dúvidas</a>
+        </nav>
+      </div>
+      <div class="footer-bot">© 2026 DevClub — Todos os direitos reservados</div>
+    </div>
+  </footer>
+
+  <!-- ══════════════ SUPORTE ══════════════ -->
+  <div class="support-panel" id="supportPanel" role="dialog" aria-label="Suporte DevClub" aria-hidden="true">
+    <div class="support-head">
+      <span class="support-avatar" aria-hidden="true">DC</span>
+      <h3>Olá, boas-vindas ao Suporte DevClub.</h3>
+      <p>Fala com a gente antes de garantir sua vaga — tiramos dúvidas sobre a trilha, pagamento e turma.</p>
+    </div>
+    <div class="support-body">
+      <div class="support-status"><i aria-hidden="true"></i>Estamos online</div>
+      <p class="support-note">Normalmente respondemos em poucos minutos.</p>
+      <a class="support-cta" id="supportWhats"
+        href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20quero%20garantir%20minha%20vaga%20na%20Forma%C3%A7%C3%A3o%20Full%20Stack%20Pro%20da%20DevClub!"
+        target="_blank" rel="noopener">
+        Iniciar conversa
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+    </div>
+  </div>
+  <button type="button" class="support-fab" id="supportFab" aria-expanded="false" aria-controls="supportPanel"
+    aria-label="Abrir suporte">
+    <svg class="ico-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" />
+    </svg>
+    <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 6 18 18M18 6 6 18" />
+    </svg>
+    <span class="ico-dot" aria-hidden="true"></span>
+  </button>
 
 </body>
 
