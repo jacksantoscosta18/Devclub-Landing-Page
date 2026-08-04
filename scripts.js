@@ -164,10 +164,17 @@
     };
     const GLOWS = [glowSprite('255,255,255'), glowSprite('150,190,255'), glowSprite('123,224,245')];
 
+    // Canvas de amostragem reaproveitado, anexado ao DOM dentro da área visível
+    // (1px, opacidade zero) — alguns navegadores mobile não fazem a leitura de
+    // pixels corretamente em canvases nunca inseridos na página.
+    const offCanvas = document.createElement('canvas');
+    offCanvas.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;z-index:-1';
+    document.body ? document.body.appendChild(offCanvas) : document.addEventListener('DOMContentLoaded', () => document.body.appendChild(offCanvas));
+
     function buildWord() {
         // Renderiza "DEVCLUB" fora da tela e amostra os pixels acesos
-        const off = document.createElement('canvas');
-        const octx = off.getContext('2d', { willReadFrequently: true });
+        const off = offCanvas;
+        const octx = off.getContext('2d');
         off.width = W; off.height = H;
 
         const size = clamp(W * 0.135, 40, 190);
@@ -193,7 +200,13 @@
         const pts = [];
         for (let y = 0; y < H; y += step) {
             for (let x = 0; x < W; x += step) {
-                if (data[(y * W + x) * 4 + 3] > 128) {
+                // x/y fracionários (step 2.2/2.8) exigem arredondar pra baixo antes de
+                // indexar o array de pixels — índice fracionário num typed array
+                // sempre dá `undefined`, o que fazia a amostragem falhar em qualquer
+                // tela com menos de 1200px de largura (ou seja, praticamente todo
+                // celular, mas funcionava sempre em telas largas de desktop).
+                const xi = x | 0, yi = y | 0;
+                if (data[(yi * W + xi) * 4 + 3] > 128) {
                     pts.push([x + (Math.random() - .5) * 0.7, y + (Math.random() - .5) * 0.7]);
                 }
             }
@@ -349,7 +362,16 @@
     heroScroll();
     window.addEventListener('scroll', heroScroll, { passive: true });
     window.addEventListener('resize', () => { resize(); heroScroll(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(buildWord);
+    window.addEventListener('orientationchange', () => { resize(); heroScroll(); });
+    // Reconstrói de novo como rede de segurança pra fontes que carregam depois
+    // do primeiro layout (comum no celular) — via resize() pra sempre reler o
+    // tamanho real do canvas nesse momento.
+    if (document.fonts) {
+        document.fonts.load(`700 ${Math.round(clamp(W * 0.135, 40, 190))}px "Space Grotesk"`).catch(() => { }).then(resize);
+        document.fonts.ready.then(resize).catch(() => { });
+    }
+    setTimeout(resize, 400);
+    setTimeout(resize, 1200);
     if (!reduce) requestAnimationFrame(draw); else { progress = shown = 1; draw(); }
 
     /* ══════════════════════════════════════════
@@ -471,50 +493,62 @@
             return [CX + Math.cos(a) * r, CY + Math.sin(a) * r];
         };
         const NS = 'http://www.w3.org/2000/svg';
-        const grid = document.getElementById('radarGrid');
-        const axesG = document.getElementById('radarAxes');
+
+        // Desenha o pentágono de competências dentro de qualquer conjunto de
+        // grupos SVG — usado tanto no celular pequeno (com sufixo '') quanto no
+        // modal de diagnóstico (com sufixo '2'), pra não duplicar essa conta.
+        function buildRadarInto(suffix) {
+            const grid = document.getElementById('radarGrid' + suffix);
+            const axesG = document.getElementById('radarAxes' + suffix);
+            const dots = document.getElementById('radarDots' + suffix);
+            const labels = document.getElementById('radarLabels' + suffix);
+            const poly = document.getElementById('radarPoly' + suffix);
+            if (!grid || grid.childElementCount) return poly; // já construído, não duplica
+
+            [.28, .52, .76, 1].forEach(k => {
+                const p = document.createElementNS(NS, 'polygon');
+                p.setAttribute('points', axes.map((_, i) => pt(i, R * k).join(',')).join(' '));
+                grid.appendChild(p);
+            });
+            axes.forEach((ax, i) => {
+                const [x, y] = pt(i, R);
+                const l = document.createElementNS(NS, 'line');
+                l.setAttribute('x1', CX); l.setAttribute('y1', CY); l.setAttribute('x2', x); l.setAttribute('y2', y);
+                axesG.appendChild(l);
+
+                const [dx, dy] = pt(i, R * ax.v);
+                const c = document.createElementNS(NS, 'circle');
+                c.setAttribute('cx', dx); c.setAttribute('cy', dy); c.setAttribute('r', 2);
+                c.setAttribute('class', 'radar-dot');
+                dots.appendChild(c);
+
+                // rótulo + valor, empurrados para fora do polígono
+                const [lx, ly] = pt(i, LR);
+                const anchor = Math.abs(lx - CX) < 6 ? 'middle' : (lx > CX ? 'start' : 'end');
+                const ox = anchor === 'middle' ? 0 : (lx > CX ? -4 : 4);
+
+                const val = document.createElementNS(NS, 'text');
+                val.setAttribute('x', lx + ox); val.setAttribute('y', ly - 2);
+                val.setAttribute('text-anchor', anchor);
+                val.setAttribute('class', 'radar-val');
+                val.setAttribute('fill', ax.v >= .8 ? '#7BE0F5' : (ax.v >= .7 ? '#8FBBFF' : '#C3A6FF'));
+                val.textContent = Math.round(ax.v * 100) + '%';
+                labels.appendChild(val);
+
+                const lab = document.createElementNS(NS, 'text');
+                lab.setAttribute('x', lx + ox); lab.setAttribute('y', ly + 7);
+                lab.setAttribute('text-anchor', anchor);
+                lab.setAttribute('class', 'radar-label');
+                lab.textContent = ax.label;
+                labels.appendChild(lab);
+            });
+            poly.setAttribute('points', axes.map((ax, i) => pt(i, R * ax.v).join(',')).join(' '));
+            return poly;
+        }
+
+        const poly = buildRadarInto('');
         const dots = document.getElementById('radarDots');
         const labels = document.getElementById('radarLabels');
-
-        [.28, .52, .76, 1].forEach(k => {
-            const poly = document.createElementNS(NS, 'polygon');
-            poly.setAttribute('points', axes.map((_, i) => pt(i, R * k).join(',')).join(' '));
-            grid.appendChild(poly);
-        });
-        axes.forEach((ax, i) => {
-            const [x, y] = pt(i, R);
-            const l = document.createElementNS(NS, 'line');
-            l.setAttribute('x1', CX); l.setAttribute('y1', CY); l.setAttribute('x2', x); l.setAttribute('y2', y);
-            axesG.appendChild(l);
-
-            const [dx, dy] = pt(i, R * ax.v);
-            const c = document.createElementNS(NS, 'circle');
-            c.setAttribute('cx', dx); c.setAttribute('cy', dy); c.setAttribute('r', 2);
-            c.setAttribute('class', 'radar-dot');
-            dots.appendChild(c);
-
-            // rótulo + valor, empurrados para fora do polígono
-            const [lx, ly] = pt(i, LR);
-            const anchor = Math.abs(lx - CX) < 6 ? 'middle' : (lx > CX ? 'start' : 'end');
-            const ox = anchor === 'middle' ? 0 : (lx > CX ? -4 : 4);
-
-            const val = document.createElementNS(NS, 'text');
-            val.setAttribute('x', lx + ox); val.setAttribute('y', ly - 2);
-            val.setAttribute('text-anchor', anchor);
-            val.setAttribute('class', 'radar-val');
-            val.setAttribute('fill', ax.v >= .8 ? '#7BE0F5' : (ax.v >= .7 ? '#8FBBFF' : '#C3A6FF'));
-            val.textContent = Math.round(ax.v * 100) + '%';
-            labels.appendChild(val);
-
-            const lab = document.createElementNS(NS, 'text');
-            lab.setAttribute('x', lx + ox); lab.setAttribute('y', ly + 7);
-            lab.setAttribute('text-anchor', anchor);
-            lab.setAttribute('class', 'radar-label');
-            lab.textContent = ax.label;
-            labels.appendChild(lab);
-        });
-        const poly = document.getElementById('radarPoly');
-        poly.setAttribute('points', axes.map((ax, i) => pt(i, R * ax.v).join(',')).join(' '));
 
         // Construção amarrada ao scroll: começa quando o celular ainda está
         // entrando na tela e só termina quando ele já está bem visível — dando
@@ -533,6 +567,9 @@
         radarUpdate();
         window.addEventListener('scroll', radarUpdate, { passive: true });
         window.addEventListener('resize', radarUpdate);
+
+        // Expõe pro módulo do modal de diagnóstico construir a versão grande.
+        window.__buildRadarInto = buildRadarInto;
     })();
 
     /* ══════════════════════════════════════════
@@ -713,7 +750,6 @@
     (() => {
         const fab = document.getElementById('supportFab');
         const panel = document.getElementById('supportPanel');
-        const cta = document.getElementById('ctaGarantirVaga');
         if (!fab || !panel) return;
 
         const setOpen = open => {
@@ -724,7 +760,6 @@
         const toggle = () => setOpen(!document.body.classList.contains('support-open'));
 
         fab.addEventListener('click', toggle);
-        cta?.addEventListener('click', () => setOpen(true));
 
         document.addEventListener('click', e => {
             if (!document.body.classList.contains('support-open')) return;
@@ -733,6 +768,70 @@
         });
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') setOpen(false);
+        });
+    })();
+
+    /* ══════════════════════════════════════════
+       14. DIAGNÓSTICO — o radar "vem pra frente" ao apertar o botão do celular
+       ══════════════════════════════════════════ */
+    (() => {
+        const btn = document.getElementById('phBtn');
+        const backdrop = document.getElementById('diagBackdrop');
+        const modal = document.getElementById('diagModal');
+        const card = document.getElementById('diagCard');
+        const closeBtn = document.getElementById('diagClose');
+        const phoneEl = document.querySelector('.phone');
+        if (!btn || !modal || !card) return;
+
+        // Constrói a versão grande do radar (mesma função usada no celular). O
+        // preenchimento (.radar-poly) começa em opacity:0/scale(.05) por CSS —
+        // no celular isso é controlado pelo scroll, mas aqui é um retrato estático,
+        // então precisa forçar pra visível na hora, senão fica vazio por dentro.
+        if (window.__buildRadarInto) {
+            const poly2 = window.__buildRadarInto('2');
+            if (poly2) { poly2.style.transform = 'scale(1)'; poly2.style.opacity = '1'; }
+        }
+
+        let busy = false;
+        function openDiag() {
+            if (busy) return;
+            busy = true;
+            document.body.classList.add('diag-open');
+            modal.setAttribute('aria-hidden', 'false');
+            backdrop.setAttribute('aria-hidden', 'false');
+
+            if (!reduce && phoneEl) {
+                // Efeito "vem pra frente": parte pequeno, exatamente de cima do
+                // celular, e cresce/centraliza até virar o cartão grande.
+                const cardRect = card.getBoundingClientRect();
+                const phoneRect = phoneEl.getBoundingClientRect();
+                const dx = (phoneRect.left + phoneRect.width / 2) - (cardRect.left + cardRect.width / 2);
+                const dy = (phoneRect.top + phoneRect.height / 2) - (cardRect.top + cardRect.height / 2);
+                const scale = clamp(phoneRect.width / cardRect.width, 0.25, 1);
+                card.style.transition = 'none';
+                card.style.transform = `translate(${dx}px,${dy}px) scale(${scale})`;
+                card.style.opacity = '0.5';
+                void card.offsetWidth; // força reflow antes de tirar a transição
+                card.style.transition = '';
+                requestAnimationFrame(() => {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                });
+            }
+            setTimeout(() => { busy = false; }, 500);
+        }
+
+        function closeDiag() {
+            document.body.classList.remove('diag-open');
+            modal.setAttribute('aria-hidden', 'true');
+            backdrop.setAttribute('aria-hidden', 'true');
+        }
+
+        btn.addEventListener('click', openDiag);
+        closeBtn?.addEventListener('click', closeDiag);
+        backdrop.addEventListener('click', closeDiag);
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && document.body.classList.contains('diag-open')) closeDiag();
         });
     })();
 })();

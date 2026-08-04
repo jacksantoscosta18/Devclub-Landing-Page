@@ -71,10 +71,11 @@ body {
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* clip (e não hidden) para não quebrar os position:sticky da página */
-    overflow-x: clip;
 }
 
+/* Clipping só no <html> (raiz) — se o <body> também declarar overflow-x,
+   ele vira um contêiner de rolagem próprio e quebra o position:sticky do
+   hero/mentores no Safari/iOS. */
 html {
     overflow-x: clip
 }
@@ -1022,6 +1023,8 @@ body::after {
     width: 100%;
     height: 42px;
     border-radius: 100px;
+    border: 0;
+    cursor: pointer;
     background: linear-gradient(180deg, #6BA0FF, #3D7BF0);
     color: #03040c;
     font-family: var(--display);
@@ -1031,6 +1034,12 @@ body::after {
     place-items: center;
     position: relative;
     box-shadow: 0 8px 24px -6px rgba(77, 141, 255, .6);
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.ph-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -6px rgba(77, 141, 255, .75)
 }
 
 .ph-home {
@@ -1039,6 +1048,158 @@ body::after {
     border-radius: 4px;
     background: rgba(255, 255, 255, .35);
     margin-top: .85rem
+}
+
+/* Diagnóstico em tela cheia — o gráfico "vem pra frente" quando aperta
+   "Ver meu diagnóstico", saindo do celular pequeno pra um cartão grande
+   centralizado, com efeito de zoom partindo da posição do celular. */
+body.diag-open {
+    overflow: hidden
+}
+
+.diag-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(4, 6, 15, .72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s var(--ease-io);
+}
+
+body.diag-open .diag-backdrop {
+    opacity: 1;
+    pointer-events: auto
+}
+
+.diag-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 81;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    pointer-events: none;
+}
+
+body.diag-open .diag-modal {
+    pointer-events: auto
+}
+
+.diag-card {
+    position: relative;
+    width: min(420px, 100%);
+    border-radius: 32px;
+    overflow: hidden;
+    background: radial-gradient(120% 80% at 50% 0%, #1B2452 0%, #0A0D1C 60%, #06070F 100%);
+    border: 1px solid var(--line-hi);
+    box-shadow: 0 60px 120px -30px rgba(0, 0, 0, .85), inset 0 1px 0 rgba(255, 255, 255, .08);
+    padding: 2.5rem 2rem 2.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(.92);
+    opacity: 0;
+    transition: transform .5s cubic-bezier(.2, .8, .2, 1), opacity .4s var(--ease-io);
+}
+
+body.diag-open .diag-card {
+    transform: scale(1);
+    opacity: 1
+}
+
+.diag-close {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .08);
+    color: var(--txt);
+    display: grid;
+    place-items: center;
+    transition: background .25s var(--ease);
+}
+
+.diag-close:hover {
+    background: rgba(255, 255, 255, .16)
+}
+
+.diag-close svg {
+    width: 16px;
+    height: 16px
+}
+
+.diag-card .ph-label,
+.diag-card .ph-title,
+.diag-card .ph-score {
+    position: relative
+}
+
+.diag-card .ph-title {
+    font-size: 1.3rem;
+    margin-top: .5rem
+}
+
+.diag-card .ph-score {
+    font-size: 3.4rem
+}
+
+.diag-card .radar {
+    width: min(300px, 90%);
+    margin-top: 1.25rem
+}
+
+.diag-card .radar-label {
+    font-size: 8px
+}
+
+.diag-card .radar-val {
+    font-size: 9.6px
+}
+
+.diag-note {
+    margin-top: 1.5rem;
+    font-size: var(--fs-sm);
+    color: var(--txt-2);
+    line-height: 1.5
+}
+
+.diag-cta {
+    margin-top: 1.5rem;
+    width: 100%;
+    height: 48px;
+    border-radius: 100px;
+    border: 0;
+    cursor: pointer;
+    background: linear-gradient(180deg, #6BA0FF, #3D7BF0);
+    color: #03040c;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: .92rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    box-shadow: 0 10px 28px -8px rgba(77, 141, 255, .65);
+    transition: transform .3s var(--ease);
+}
+
+.diag-cta:hover {
+    transform: translateY(-2px)
+}
+
+.diag-cta svg {
+    width: 16px;
+    height: 16px
 }
 
 /* ============================================================
@@ -2072,11 +2233,23 @@ body::after {
 /* ============================================================
    SUPORTE — bolha flutuante + painel de contato
    ============================================================ */
-.support-fab {
+/* Contêiner com inset:0 (não width:100vw) — em telas com qualquer overflow
+   horizontal, "right:" de um position:fixed direto no body pode calcular
+   contra uma largura maior que a tela visível de verdade e sumir pela
+   borda no celular. Um wrapper fixo com inset:0 sempre bate certo com a
+   viewport visível, e os filhos ficam position:absolute dentro dele. */
+.support-root {
     position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none
+}
+
+.support-fab {
+    position: absolute;
     right: clamp(1.1rem, 3vw, 2rem);
     bottom: clamp(1.1rem, 3vw, 2rem);
-    z-index: 60;
+    pointer-events: auto;
     width: 58px;
     height: 58px;
     border-radius: 50%;
@@ -2125,10 +2298,9 @@ body.support-open .support-fab .ico-close {
 }
 
 .support-panel {
-    position: fixed;
+    position: absolute;
     right: clamp(1.1rem, 3vw, 2rem);
     bottom: calc(clamp(1.1rem, 3vw, 2rem) + 74px);
-    z-index: 60;
     width: min(340px, 86vw);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -2431,7 +2603,41 @@ body.support-open .support-panel {
     }
 
     .quote {
-        width: min(78vw, 300px)
+        width: min(70vw, 250px);
+        padding: 1.2rem 1.1rem;
+        gap: .9rem;
+    }
+
+    .quote p {
+        font-size: .825rem;
+        line-height: 1.55
+    }
+
+    .quote-stars svg {
+        width: 11px;
+        height: 11px
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: .7rem
+    }
+
+    .quote-who b {
+        font-size: .82rem
+    }
+
+    .quote-who small {
+        font-size: .7rem
+    }
+
+    .marquee {
+        gap: .75rem
+    }
+
+    .marquee-row+.marquee-row {
+        margin-top: .75rem
     }
 
     .marquee-row {
