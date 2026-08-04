@@ -451,6 +451,13 @@
        ══════════════════════════════════════════ */
     const fmt = (v, mode) => {
         if (mode === 'k') return (v / 1000).toFixed(v >= 12000 ? 0 : 1).replace('.', ',') + ' mil';
+        // 'decN': o valor vem multiplicado por N para animar em inteiro.
+        // dec100 → 215 vira 2,15 · dec10 → 1109 vira 110,9
+        if (mode && mode.startsWith('dec')) {
+            const div = +mode.slice(3) || 100;
+            const casas = String(div).length - 1;
+            return (v / div).toFixed(casas).replace('.', ',');
+        }
         if (mode === 'milhar') return v.toLocaleString('pt-BR');
         return v.toLocaleString('pt-BR');
     };
@@ -695,9 +702,12 @@
             const row = document.getElementById(rowId);
             const inner = document.createElement('div');
             inner.className = 'marquee';
-            // 3 cópias: o loop desloca exatamente 1/3, sem buraco em telas largas
+            // 3 cópias: o loop desloca exatamente 1/3, sem buraco em telas largas.
+            // As cópias 2 e 3 levam aria-hidden no próprio <article> — envolvê-las
+            // numa <div> quebraria o flex do .marquee (viraria 1 item só).
             const html = list.map(card).join('');
-            inner.innerHTML = html + html + html;
+            const clone = html.replace(/<article class="quote"/g, '<article class="quote" aria-hidden="true"');
+            inner.innerHTML = html + clone + clone;
             row.appendChild(inner);
         };
         build('row1', data.slice(0, 5));
@@ -707,9 +717,12 @@
     /* ══════════════════════════════════════════
        11. FAQ
        ══════════════════════════════════════════ */
-    document.querySelectorAll('.faq-item').forEach(item => {
+    document.querySelectorAll('.faq-item').forEach((item, idx) => {
         const btn = item.querySelector('.faq-q');
         const panel = item.querySelector('.faq-a');
+        const panelId = `faq-panel-${idx}`;
+        panel.id = panelId;
+        btn.setAttribute('aria-controls', panelId);
         btn.addEventListener('click', () => {
             const open = item.classList.contains('open');
             document.querySelectorAll('.faq-item.open').forEach(o => {

@@ -826,6 +826,96 @@ body::after {
 }
 
 /* ============================================================
+   PROVA DE MERCADO — dados com fonte citada
+   ============================================================ */
+.proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.6rem);
+    margin-top: 3rem
+}
+
+.proof-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .008));
+    padding: clamp(1.5rem, 2.6vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    transition: border-color .4s var(--ease), background .4s var(--ease);
+}
+
+.proof-card:hover {
+    border-color: var(--accent-line);
+    background: linear-gradient(180deg, rgba(77, 141, 255, .08), rgba(255, 255, 255, .01))
+}
+
+.proof-num {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -.05em;
+    line-height: 1;
+    font-size: clamp(2.6rem, 5.4vw, 4rem);
+    display: flex;
+    align-items: baseline;
+    gap: .06em;
+    background: linear-gradient(120deg, #fff 30%, var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.proof-num .suf {
+    font-size: .42em;
+    -webkit-text-fill-color: var(--accent-2)
+}
+
+.proof-card h3 {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.3;
+    color: #fff
+}
+
+.proof-card p {
+    font-size: var(--fs-sm);
+    color: var(--txt-2);
+    line-height: 1.6;
+    flex: 1
+}
+
+.proof-src {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--txt-3);
+    line-height: 1.5;
+    padding-top: .85rem;
+    border-top: 1px solid var(--line);
+}
+
+.proof-src a {
+    color: var(--accent-2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color .3s
+}
+
+.proof-src a:hover {
+    color: var(--accent)
+}
+
+.proof-disc {
+    display: block;
+    margin-top: .4rem;
+    color: var(--txt-3);
+    opacity: .75;
+    font-size: .66rem
+}
+
+/* ============================================================
    NÚMEROS + RADAR (ref. 5)
    ============================================================ */
 .stats-layout {
@@ -1729,6 +1819,7 @@ body.diag-open .diag-card {
     position: absolute;
     inset: 0;
     border-radius: 50%;
+    overflow: hidden;
     display: grid;
     place-items: center;
     opacity: 0;
@@ -1739,6 +1830,18 @@ body.diag-open .diag-card {
 .mentor-face.on {
     opacity: 1;
     transform: scale(1) rotate(0deg)
+}
+
+/* A foto compensa o giro do disco (--spin) para o rosto ficar sempre em pé */
+.mentor-face img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    transform: rotate(var(--spin, 0deg)) scale(1.06);
+    filter: saturate(.9) contrast(1.04);
 }
 
 .mentor-face .initials {
@@ -1758,7 +1861,8 @@ body.diag-open .diag-card {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(70% 60% at 30% 22%, rgba(255, 255, 255, .22), transparent 60%), linear-gradient(180deg, transparent 40%, rgba(3, 5, 14, .6));
+    z-index: 1;
+    background: radial-gradient(70% 60% at 30% 22%, rgba(255, 255, 255, .14), transparent 60%), linear-gradient(180deg, transparent 45%, rgba(3, 5, 14, .72));
 }
 
 /* paletas por mentor */
@@ -2600,6 +2704,10 @@ body.support-open .support-panel {
 
     .scroll-hint i {
         height: 30px
+    }
+
+    .proof-num {
+        font-size: clamp(2.2rem, 11vw, 3rem)
     }
 
     .quote {
